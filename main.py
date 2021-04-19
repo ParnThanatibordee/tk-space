@@ -4,8 +4,6 @@ from random import randint, random
 
 import tkinter as tk
 
-from gamelib import Sprite, GameApp, Text
-
 from consts import *
 from elements import Ship, Bullet, Enemy
 from utils import random_edge_position, normalize_vector, direction_to_dxdy, vector_len, distance
@@ -18,8 +16,9 @@ class SpaceGame(GameApp):
         self.ship = Ship(self, CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
 
         self.level = 1
-        self.level_text = Text(self, '', 100, 580)
-        self.update_level_text()
+        """self.level_text = Text(self, '', 100, 580)
+        self.update_level_text()"""
+        self.level = StatusWithText(self, 100, 580, 'Level: %d', self.level)
 
         self.score_wait = 0
         # --- remove this
@@ -29,10 +28,11 @@ class SpaceGame(GameApp):
         # --- replace with:
         self.score = StatusWithText(self, 100, 20, 'Score: %d', 0)
 
-        self.bomb_power = BOMB_FULL_POWER
         self.bomb_wait = 0
+        """self.bomb_power = BOMB_FULL_POWER
         self.bomb_power_text = Text(self, '', 700, 20)
-        self.update_bomb_power_text()
+        self.update_bomb_power_text()"""
+        self.bomb_power = StatusWithText(self, 700, 20, 'Power: %d%%', BOMB_FULL_POWER)
 
         self.elements.append(self.ship)
 
@@ -64,8 +64,8 @@ class SpaceGame(GameApp):
         return len(self.bullets)
 
     def bomb(self):
-        if self.bomb_power == BOMB_FULL_POWER:
-            self.bomb_power = 0
+        if self.bomb_power.value == BOMB_FULL_POWER:
+            self.bomb_power.value = 0
 
             self.bomb_canvas_id = self.canvas.create_oval(
                 self.ship.x - BOMB_RADIUS,
@@ -104,35 +104,28 @@ class SpaceGame(GameApp):
 
     def update_bomb_power(self):
         self.bomb_wait += 1
-        if (self.bomb_wait >= BOMB_WAIT) and (self.bomb_power != BOMB_FULL_POWER):
-            self.bomb_power += 1
+        if (self.bomb_wait >= BOMB_WAIT) and (self.bomb_power.value != BOMB_FULL_POWER):
+            self.bomb_power.value += 1
+
             self.bomb_wait = 0
-            self.update_bomb_power_text()
 
     """def create_enemy_star(self):
         enemies = []
-
         x = randint(100, CANVAS_WIDTH - 100)
         y = randint(100, CANVAS_HEIGHT - 100)
-
         while vector_len(x - self.ship.x, y - self.ship.y) < 200:
             x = randint(100, CANVAS_WIDTH - 100)
             y = randint(100, CANVAS_HEIGHT - 100)
-
         for d in range(18):
             dx, dy = direction_to_dxdy(d * 20)
             enemy = Enemy(self, x, y, dx * ENEMY_BASE_SPEED, dy * ENEMY_BASE_SPEED)
             enemies.append(enemy)
-
         return enemies
-
     def create_enemy_from_edges(self):
         x, y = random_edge_position()
         vx, vy = normalize_vector(self.ship.x - x, self.ship.y - y)
-
         vx *= ENEMY_BASE_SPEED
         vy *= ENEMY_BASE_SPEED
-
         enemy = Enemy(self, x, y, vx, vy)
         return [enemy]"""
 
