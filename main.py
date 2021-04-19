@@ -65,9 +65,9 @@ class SpaceGame(GameApp):
             self.bomb_power = 0
 
             self.bomb_canvas_id = self.canvas.create_oval(
-                self.ship.x - BOMB_RADIUS, 
+                self.ship.x - BOMB_RADIUS,
                 self.ship.y - BOMB_RADIUS,
-                self.ship.x + BOMB_RADIUS, 
+                self.ship.x + BOMB_RADIUS,
                 self.ship.y + BOMB_RADIUS
             )
 
@@ -220,7 +220,7 @@ class StarEnemyGenerationStrategy(EnemyGenerationStrategy):
 
         for d in range(18):
             dx, dy = direction_to_dxdy(d * 20)
-            enemy = Enemy(self, x, y, dx * ENEMY_BASE_SPEED, dy * ENEMY_BASE_SPEED)
+            enemy = Enemy(space_game, x, y, dx * ENEMY_BASE_SPEED, dy * ENEMY_BASE_SPEED)
             enemies.append(enemy)
 
         return enemies
@@ -236,7 +236,7 @@ class EdgeEnemyGenerationStrategy(EnemyGenerationStrategy):
         vx *= ENEMY_BASE_SPEED
         vy *= ENEMY_BASE_SPEED
 
-        enemy = Enemy(self, x, y, vx, vy)
+        enemy = Enemy(space_game, x, y, vx, vy)
         return [enemy]
 
 
@@ -252,8 +252,8 @@ class BombKeyPressedHandler(GameKeyboardHandler):
         print('here')
         if event.char.upper() == 'Z':
             self.game_app.bomb()
-        else:                                     #
-            super().handle(event)                 # It is very important to forward the request
+        else:  #
+            super().handle(event)  # It is very important to forward the request
 
 
 class ShipMovementKeyPressedHandler(GameKeyboardHandler):
@@ -283,7 +283,7 @@ class ShipMovementKeyReleasedHandler(GameKeyboardHandler):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Space Fighter")
- 
+
     # do not allow window resizing
     root.resizable(False, False)
     app = SpaceGame(root, CANVAS_WIDTH, CANVAS_HEIGHT, UPDATE_DELAY)
