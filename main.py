@@ -80,17 +80,17 @@ class SpaceGame(GameApp):
                 if self.ship.distance_to(e) <= BOMB_RADIUS:
                     e.to_be_deleted = True
 
-            self.update_bomb_power_text()
+            # self.update_bomb_power_text()
 
     # --- you should remove this as well
     # def update_score_text(self):
     #     self.score_text.set_text('Score: %d' % self.score)
 
-    def update_bomb_power_text(self):
-        self.bomb_power_text.set_text('Power: %d%%' % self.bomb_power)
+    """def update_bomb_power_text(self):
+        self.bomb_power_text.set_text('Power: %d%%' % self.bomb_power)"""
 
-    def update_level_text(self):
-        self.level_text.set_text('Level: %d' % self.level)
+    """def update_level_text(self):
+        self.level_text.set_text('Level: %d' % self.level)"""
 
     def update_score(self):
         self.score_wait += 1
