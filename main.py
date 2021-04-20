@@ -165,7 +165,7 @@ class SpaceGame(GameApp):
     def process_collisions(self):
         self.process_bullet_enemy_collisions()
         # -- comment out this line to prevent ship collision
-        # self.process_ship_enemy_collision()
+        self.process_ship_enemy_collision()
 
     def update_and_filter_deleted(self, elements):
         new_list = []
