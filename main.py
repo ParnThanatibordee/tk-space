@@ -67,20 +67,26 @@ class SpaceGame(GameApp):
         if self.bomb_power.value == BOMB_FULL_POWER:
             self.bomb_power.value = 0
 
-            self.bomb_canvas_id = self.canvas.create_oval(
-                self.ship.x - BOMB_RADIUS,
-                self.ship.y - BOMB_RADIUS,
-                self.ship.x + BOMB_RADIUS,
-                self.ship.y + BOMB_RADIUS
-            )
+            self.circle_drawing()
 
-            self.after(200, lambda: self.canvas.delete(self.bomb_canvas_id))
-
-            for e in self.enemies:
-                if self.ship.distance_to(e) <= BOMB_RADIUS:
-                    e.to_be_deleted = True
+            self.enemy_destroying_loop()
 
             # self.update_bomb_power_text()
+
+    def enemy_destroying_loop(self):
+        for e in self.enemies:
+            if self.ship.distance_to(e) <= BOMB_RADIUS:
+                e.to_be_deleted = True
+
+    def circle_drawing(self):
+        self.bomb_canvas_id = self.canvas.create_oval(
+            self.ship.x - BOMB_RADIUS,
+            self.ship.y - BOMB_RADIUS,
+            self.ship.x + BOMB_RADIUS,
+            self.ship.y + BOMB_RADIUS
+        )
+
+        self.after(200, lambda: self.canvas.delete(self.bomb_canvas_id))
 
     # --- you should remove this as well
     # def update_score_text(self):
